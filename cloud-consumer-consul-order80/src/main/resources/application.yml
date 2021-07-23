@@ -1,0 +1,13 @@
+server:
+  port: 80
+spring:
+  application:
+    name: cosul-consumer
+  cloud:
+    consul:
+      port: 8500
+      host: localhost
+      discovery:
+        prefer-ip-address: true
+
+

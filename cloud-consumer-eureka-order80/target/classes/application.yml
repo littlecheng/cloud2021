@@ -1,0 +1,25 @@
+server:
+  port: 80
+spring:
+  application:
+    name: consumer
+
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eureka7001.com:8761/eureka/,http://eureka7002.com:8762/eureka/
+
+  instance:
+     instance-id: consumer-order80
+     prefer-ip-address: true  #访问路径可以显示ip
+management:
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+          include: "*"
+
+

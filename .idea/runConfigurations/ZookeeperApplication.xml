@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ZookeeperApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" singleton="false">
+    <module name="cloud-provider-payment8004-zk" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.atguigu.springcloud.ZkProviderApplication" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <option name="ALTERNATIVE_JRE_PATH" value="D:\Java\jdk1.8.0_131\jre" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

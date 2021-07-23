@@ -1,0 +1,40 @@
+server:
+  port: 8001
+
+spring:
+  application:
+    name: PaymentService
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db2021?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    username: root
+    password: 852717
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.atguigu.springcloud.entities
+
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      #defaultZone: http://eureka7001.com:8761/eureka/,http://eureka7002.com:8762/eureka/
+       defaultZone: http://eureka7001.com:8761/eureka/  #单机模式
+  instance:
+    #修改Eureka监控页中status的默认描述信息。不配置默认为DESKTOP-XXX描述
+    instance-id: cloud-provider-payment8001
+    prefer-ip-address: true
+    lease-expiration-duration-in-seconds: 90 #Indicates the time in seconds that the eureka server waits since it received the last heartbeat before it can remove this instance from its view
+    lease-renewal-interval-in-seconds: 30 #Indicates how often (in seconds) the eureka client needs to send heartbeats to eureka server to indicate that it is still alive. If the heartbeats are not received for the period specified in leaseExpirationDurationInSeconds, eureka server will remove the instance from its view
+
+#showSql
+logging:
+  level:
+    com:
+      atguigu:
+        springcloud:
+          dao: debug

@@ -1,0 +1,57 @@
+server:
+  port: 9002
+
+spring:
+  application:
+    name: cloud-gateway
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+  cloud:
+    gateway:
+      enabled: true
+      routes:
+        - id: path_route
+          #uri: localhost:8001,localhost:8002
+          uri: lb://PaymentService           #微服务名
+          predicates:
+            - Path=/payment/**
+          filters:
+            - name: Hystrix
+              args:
+                name: xxxxx  #熔断的名字,随便写
+                fallbackUri: forward:/fallback          #触发gateway的回退方法
+        # 路由标识（id：标识，具有唯一性）   限流
+        - id: route_requestRateLimiter
+          # 目标服务地址（uri：地址，请求转发后的地址）
+          uri: lb://PaymentService
+          # 路由条件（predicates：断言，匹配 HTTP 请求内容）
+          predicates:
+          # 过滤器（filters：过滤器，过滤规则）
+            - Path=/payment/**
+          filters:
+            ## 限流
+            - name: RequestRateLimiter
+              args:
+                ### 限流过滤器的 Bean 名称
+                key-resolver: '#{@uriKeyResolver}'
+                ### 希望允许用户每秒处理多少个请求
+                redis-rate-limiter.replenishRate: 1
+                ### 用户允许在一秒钟内完成的最大请求数
+                redis-rate-limiter.burstCapacity: 10
+
+      discovery:
+        locator:
+          enabled: true  # 开启从注册中心动态创建路由功能，利用微服务名进行路由
+eureka:
+  client:
+    service-url:
+      defaultZone:  http://eureka7001.com:8761/eureka/
+  instance:
+    instance-id: gateway-server
+    prefer-ip-address: true
+
+
+
+#启动2个相同的提供者，端口号不同，其他相同，可以发现网关具有负载均衡效果

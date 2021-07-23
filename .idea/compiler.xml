@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="cloud-provider-payment8001-eureka" />
+        <module name="cloud-consumer-hystrix-order80" />
+        <module name="cloud-eureka-server7002" />
+        <module name="cloud-eureka-server7001" />
+        <module name="cloud-entities" />
+        <module name="cloud-provider-payment8005-zk" />
+        <module name="cloud-consumer-consul-order80" />
+        <module name="cloud-consumer-openfegin-hystrix-order80" />
+        <module name="cloud-provider-payment8002" />
+        <module name="cloud-provider-payment8001" />
+        <module name="cloud-provider-payment8004-zk" />
+        <module name="cloud-provider-payment8006-consul" />
+        <module name="cloud-provider-payment8002-eureka" />
+        <module name="cloud-consumer-eureka-order80" />
+        <module name="cloud-gateway" />
+        <module name="cloud-consumer-zk-order80" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="cloud-provider-payment8001" target="1.8" />
+      <module name="cloud-provider-payment8002" target="1.8" />
+      <module name="cloud-provider-payment8004 (1)" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="cloud-consumer-consul-order80" options="" />
+      <module name="cloud-consumer-hystrix-order80" options="" />
+      <module name="cloud-consumer-openfegin-hystrix-order80" options="" />
+      <module name="cloud-consumer-zk-order80" options="" />
+      <module name="cloud-eureka-server7001" options="" />
+      <module name="cloud-gateway" options="" />
+      <module name="cloud-provider-payment8004-zk" options="" />
+      <module name="cloud-provider-payment8006-consul" options="" />
+    </option>
+  </component>
+</project>

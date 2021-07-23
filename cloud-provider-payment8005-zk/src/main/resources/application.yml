@@ -1,0 +1,9 @@
+server:
+  port: 8005
+spring:
+  application:
+    name: PaymentService
+  cloud:
+    zookeeper:
+      connect-string: localhost:2181
+

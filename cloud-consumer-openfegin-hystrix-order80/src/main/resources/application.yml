@@ -1,0 +1,44 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: openfegin
+
+eureka:
+  client:
+    service-url:
+      #defaultZone: http://eureka7001.com:8761/eureka/,http://eureka7002.com:8762/eureka/
+       defaultZone: http://eureka7001.com:8761/eureka/   #单机模式
+  instance:
+    prefer-ip-address: true
+    lease-expiration-duration-in-seconds: 10 #Indicates the time in seconds that the eureka server waits since it received the last heartbeat before it can remove this instance from its view
+    lease-renewal-interval-in-seconds: 1  #Indicates how often (in seconds) the eureka client needs to send heartbeats to eureka server to indicate that it is still alive. If the heartbeats are not received for the period specified in leaseExpirationDurationInSeconds, eureka server will remove the instance from its view
+    #instance-id: fegin-call
+
+
+feign:
+  hystrix:
+    enabled: true  #//feign是否启用断路器，默认为false
+  client:
+    config:
+      default:
+        connectTimeout: 6000
+        readTimeout: 6000  #这两个值是独立的： 如果连接没有超时就read-timeout生效；如果connect-timeout指定的时间范围内没有连接上，则connect-timeout生效
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true # //为false则超时控制有ribbon控制，为true则hystrix超时和ribbon超时都是用，但是谁小谁生效，默认为true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000  #熔断器的超时时长默认1秒，最常修改的参数
+            #feign 和 hystrix 的超时时间，feign 和 hystrix 哪个超时时间设置的短，则哪个设置生效，就会执行fallback里的方法
+
+#日志记录
+logging:
+  level:
+    com.atguigu.springcloud.service.CallPayMent: debug   #日志级别
+
+
