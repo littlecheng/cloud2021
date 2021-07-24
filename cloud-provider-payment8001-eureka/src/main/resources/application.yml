@@ -10,7 +10,11 @@ spring:
     url: jdbc:mysql://localhost:3306/db2021?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
     username: root
     password: 852717
-
+  zipkin:
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      probability: 1  #全部集采
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
