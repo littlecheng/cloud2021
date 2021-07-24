@@ -37,7 +37,7 @@ public class OpenFeginController {
     }
 
     @GetMapping(value = "/select/{id}")
-    @HystrixCommand(commandProperties = {@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "1000")})
+    @HystrixCommand(commandProperties = {@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "2000")})
     public CommonResult<PayMent> select(@PathVariable("id") Long id)  {
         return callPayMent.select(id);
     }
@@ -76,6 +76,30 @@ public class OpenFeginController {
             e.printStackTrace();
         }
         log.info("执行吗");
+        return callPayMent.timeout(id);
+    }
+
+
+    /**
+     * 服务熔断  HystrixCommand
+     * 宕机情况下（提供者关掉服务）由HandlerError处理
+     * 在熔断时间内，请求阈值条件下，失败率达到设定值,触发circuitBreaker方法。
+     * 测试方法:先访问各自正常逻辑,都是正常访问的;
+     *        访问http://localhost/consumer/fegin/timeoutWithCircuitBreaker/-1  不断F5刷新该请求地址,满足失败率,
+     *        然后请求正常地址http://localhost/consumer/fegin/timeoutWithCircuitBreaker/1 会发现刚开始还会返回熔断后的timeoutfallback方法，等过一会访问就返回正常的返回值了
+     * @return
+     */
+    @GetMapping("/timeoutWithCircuitBreaker/{id}")
+    @HystrixCommand(fallbackMethod = "timeoutfallback",commandProperties = {@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "2500"),
+            @HystrixProperty(name="circuitBreaker.enabled",value = "true"),
+            @HystrixProperty(name="circuitBreaker.requestVolumeThreshold",value = "10"),//请求阈值
+            @HystrixProperty(name="circuitBreaker.sleepWindowInMilliseconds",value = "10000"),//熔断时间
+            @HystrixProperty(name="circuitBreaker.errorThresholdPercentage",value = "50")//失败率达到多少百分比后熔断
+    })
+    public CommonResult<String> timeoutWithCircuitBreaker(@PathVariable("id") Long id)  {
+        if(id <0){
+            throw new RuntimeException("id 不能为负数");
+        }
         return callPayMent.timeout(id);
     }
 
